@@ -1,4 +1,4 @@
-package main
+package day1
 
 import (
 	"bufio"
@@ -10,7 +10,7 @@ import (
 )
 
 func getLists() ([]int, []int) {
-	file, err := os.Open("day1.txt")
+	file, err := os.Open("day1/day1.txt")
 	if err != nil {
 		fmt.Printf("Error opening file: %v", err)
 	}
@@ -49,7 +49,7 @@ func bubbleSort(arr []int) {
 }
 
 func totalDistance(arr1, arr2 []int) int {
-	diff := 0.0
+	var diff float64
 	for i := 0; i < len(arr1); i++ {
 		diff += math.Abs(float64(arr1[i]) - float64(arr2[i]))
 	}
@@ -58,10 +58,8 @@ func totalDistance(arr1, arr2 []int) int {
 }
 
 func similarityScore(arr1, arr2 []int) int {
-	// var scores []int
-
+	var sumOfScores int
 	n := len(arr1)
-	sumOfScores := 0
 
 	for i := 0; i < n; i++ {
 		score := 0
@@ -76,7 +74,7 @@ func similarityScore(arr1, arr2 []int) int {
 	return sumOfScores
 }
 
-func dayOne() {
+func DayOne() {
 	listOne, listTwo := getLists()
 
 	bubbleSort(listOne[:])
