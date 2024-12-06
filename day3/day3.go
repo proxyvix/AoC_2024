@@ -7,6 +7,7 @@ import (
 	"regexp"
 	"strconv"
 	"strings"
+	"time"
 )
 
 func readData(path string) string {
@@ -22,7 +23,6 @@ func readData(path string) string {
 	for scanner.Scan() {
 		corruptedMemory += scanner.Text()
 	}
-
 	return corruptedMemory
 }
 
@@ -50,7 +50,6 @@ func partOne(path string) int {
 	for _, match := range matches {
 		totalSum += calcMul(match)
 	}
-
 	return totalSum
 }
 
@@ -75,14 +74,17 @@ func partTwo(path string) int {
 			totalSum += calcMul(match)
 		}
 	}
-
 	return totalSum
 }
 
 func DayThree() {
+	start := time.Now()
 	partOne := partOne("day3/day3.txt")
-	fmt.Printf("Solution for day 3 part one: %d\n", partOne)
+	duration := time.Since(start)
+	fmt.Printf("Solution for day 3 part one: %d\nexecution time: %v\n", partOne, duration)
 
+	start = time.Now()
 	partTwo := partTwo("day3/day3.txt")
-	fmt.Printf("Solution for day 3 part two: %d\n", partTwo)
+	duration = time.Since(start)
+	fmt.Printf("Solution for day 3 part two: %d\nexecution time: %v\n\n", partTwo, duration)
 }

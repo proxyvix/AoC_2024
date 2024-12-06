@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"time"
 )
 
 func readData(path string) []string {
@@ -112,9 +113,13 @@ func partTwo(path string) int {
 }
 
 func DayFour() {
+	start := time.Now()
 	partOne := partOne("day4/day4.txt")
-	fmt.Printf("Solution for day 4 part one: %d\n", partOne)
+	duration := time.Since(start)
+	fmt.Printf("Solution for day 4 part one: %d\nexecution time: %v\n", partOne, duration)
 
+	start = time.Now()
 	partTwo := partTwo("day4/day4.txt")
-	fmt.Printf("Solution for day 4 part two: %d\n", partTwo)
+	duration = time.Since(start)
+	fmt.Printf("Solution for day 4 part two: %d\nexecution time: %v\n\n", partTwo, duration)
 }

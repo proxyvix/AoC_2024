@@ -7,6 +7,7 @@ import (
 	"slices"
 	"strconv"
 	"strings"
+	"time"
 )
 
 func readData(path string) (map[int][]int, [][]int) {
@@ -113,9 +114,14 @@ func partTwo(path string) int {
 }
 
 func DayFive() {
+	start := time.Now()
 	partOne := partOne("day5/day5.txt")
-	fmt.Printf("Solution for day 5 part one: %d\n", partOne)
+	duration := time.Since(start)
+	fmt.Printf("Solution for day 5 part one: %d\nexecution time: %v\n", partOne, duration)
 
+	start = time.Now()
 	partTwo := partTwo("day5/day5.txt")
-	fmt.Printf("Solution for day 5 part two: %d\n", partTwo)
+	duration = time.Since(start)
+	fmt.Printf("Solution for day 5 part two: %d\nexecution time: %v\n\n", partTwo, duration)
+
 }

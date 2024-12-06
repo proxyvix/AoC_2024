@@ -7,6 +7,7 @@ import (
 	"os"
 	"strconv"
 	"strings"
+	"time"
 )
 
 func getLists() ([]int, []int) {
@@ -30,7 +31,6 @@ func getLists() ([]int, []int) {
 			listTwo = append(listTwo, secondVal)
 		}
 	}
-
 	return listOne, listTwo
 }
 
@@ -53,7 +53,6 @@ func totalDistance(arr1, arr2 []int) int {
 	for i := 0; i < len(arr1); i++ {
 		diff += math.Abs(float64(arr1[i]) - float64(arr2[i]))
 	}
-
 	return int(diff)
 }
 
@@ -70,7 +69,6 @@ func similarityScore(arr1, arr2 []int) int {
 		}
 		sumOfScores += arr1[i] * score
 	}
-
 	return sumOfScores
 }
 
@@ -80,9 +78,13 @@ func DayOne() {
 	bubbleSort(listOne[:])
 	bubbleSort(listTwo[:])
 
+	start := time.Now()
 	partOne := totalDistance(listOne, listTwo)
-	fmt.Printf("Solution for day 1 part one: %d\n", partOne)
+	duration := time.Since(start)
+	fmt.Printf("Solution for day 1 part one: %d\nexecution time: %v\n", partOne, duration)
 
+	start = time.Now()
 	partTwo := similarityScore(listOne, listTwo)
-	fmt.Printf("Solution for day 1 part two: %d\n", partTwo)
+	duration = time.Since(start)
+	fmt.Printf("Solution for day 1 part two: %d\nexecution time: %v\n\n", partTwo, duration)
 }

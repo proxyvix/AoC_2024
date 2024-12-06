@@ -6,6 +6,7 @@ import (
 	"os"
 	"strconv"
 	"strings"
+	"time"
 )
 
 func readData(path string) [][]int {
@@ -28,9 +29,7 @@ func readData(path string) [][]int {
 		}
 		reports = append(reports, levels)
 	}
-
 	return reports
-
 }
 
 func isIncreasing(row []int) bool {
@@ -63,7 +62,7 @@ func isSafe(row []int) bool {
 	return false
 }
 
-func partOneSolution(path string) int {
+func partOne(path string) int {
 	reports := readData(path)
 
 	var safeReports int
@@ -92,7 +91,7 @@ func isSafeDampener(row []int) bool {
 	return false
 }
 
-func partTwoSolution(path string) int {
+func partTwo(path string) int {
 	reports := readData(path)
 
 	var safeReports int
@@ -105,9 +104,13 @@ func partTwoSolution(path string) int {
 }
 
 func DayTwo() {
-	partOne := partOneSolution("day2/day2.txt")
-	fmt.Printf("Solution for day 2 part one: %d\n", partOne)
+	start := time.Now()
+	partOne := partOne("day2/day2.txt")
+	duration := time.Since(start)
+	fmt.Printf("Solution for day 2 part one: %d\nexecution time: %v\n", partOne, duration)
 
-	partTwo := partTwoSolution("day2/day2.txt")
-	fmt.Printf("Solution for day 2 part two: %d\n", partTwo)
+	start = time.Now()
+	partTwo := partTwo("day2/day2.txt")
+	duration = time.Since(start)
+	fmt.Printf("Solution for day 2 part two: %d\nexecution time: %v\n\n", partTwo, duration)
 }
