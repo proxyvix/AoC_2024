@@ -140,5 +140,4 @@ func DaySeven() {
 	partTwo := partTwo("day7/day7.txt")
 	duration = time.Since(start)
 	fmt.Printf("Solution for day 7 part two: %d\nexecution time: %v\n\n", partTwo, duration)
-
 }

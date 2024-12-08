@@ -6,7 +6,9 @@ import (
 	"github.com/proxyvix/AoC_2024/day3"
 	"github.com/proxyvix/AoC_2024/day4"
 	"github.com/proxyvix/AoC_2024/day5"
+	"github.com/proxyvix/AoC_2024/day6"
 	"github.com/proxyvix/AoC_2024/day7"
+	"github.com/proxyvix/AoC_2024/day8"
 )
 
 func main() {
@@ -15,6 +17,7 @@ func main() {
 	day3.DayThree()
 	day4.DayFour()
 	day5.DayFive()
-	// day6.DaySix()
+	day6.DaySix()
 	day7.DaySeven()
+	day8.DayEight()
 }
