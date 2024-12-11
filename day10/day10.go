@@ -127,5 +127,5 @@ func DayTen() {
 	start = time.Now()
 	result = partTwo("day10/day10.txt")
 	duration = time.Since(start)
-	fmt.Printf("Solution for day 10 part two: %d\nExecution time: %v\n", result, duration)
+	fmt.Printf("Solution for day 10 part two: %d\nExecution time: %v\n\n", result, duration)
 }

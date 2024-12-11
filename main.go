@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/proxyvix/AoC_2024/day1"
 	"github.com/proxyvix/AoC_2024/day10"
+	"github.com/proxyvix/AoC_2024/day11"
 	"github.com/proxyvix/AoC_2024/day2"
 	"github.com/proxyvix/AoC_2024/day3"
 	"github.com/proxyvix/AoC_2024/day4"
@@ -24,4 +25,5 @@ func main() {
 	day8.DayEight()
 	day9.DayNine()
 	day10.DayTen()
+	day11.DayEleven()
 }
