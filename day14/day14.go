@@ -72,21 +72,6 @@ func (r *Robots) move() {
 	r.p.py = (r.p.py + r.v.vy + H) % H
 }
 
-func checkTree(cnt [][]int) bool {
-	N := 10
-	sm := 0
-
-	for i := 0; i < W; i++ {
-		for j := 0; j < H; j++ {
-			if j >= N && j <= H-N {
-				continue
-			}
-			sm += cnt[i][j]
-		}
-	}
-	return sm < 10
-}
-
 func partOne(path string) int {
 	robots := readData(path)
 
@@ -124,27 +109,26 @@ func partOne(path string) int {
 
 func partTwo(path string) int {
 	robots := readData(path)
-	floorPlan := make([][]int, H)
-	for i := range floorPlan {
-		floorPlan[i] = make([]int, W)
+	grid := make([][]int, H)
+	for i := range grid {
+		grid[i] = make([]int, W)
 	}
 
 	for _, r := range robots {
-		floorPlan[r.p.py][r.p.px]++
+		grid[r.p.py][r.p.px]++
 	}
 
 	for steps := 1; ; steps++ {
 		for i, r := range robots {
-			floorPlan[r.p.py][r.p.px]-- // Remove robot's old position
+			grid[r.p.py][r.p.px]--
 			r.move()
-			floorPlan[r.p.py][r.p.px]++ // Add robot's new position
+			grid[r.p.py][r.p.px]++
 			robots[i] = r
 		}
 
-		// Check for matching triangle pattern
 		for x := 0; x <= H-len(triangle); x++ {
 			for y := 0; y <= W-len(triangle[0]); y++ {
-				if isMatch(floorPlan, x, y) {
+				if isMatch(grid, x, y) {
 					return steps
 				}
 			}
@@ -152,11 +136,10 @@ func partTwo(path string) int {
 	}
 }
 
-// Checks if the triangle pattern matches a given region in the floor plan
-func isMatch(floorPlan [][]int, x, y int) bool {
+func isMatch(grid [][]int, x, y int) bool {
 	for i := 0; i < len(triangle); i++ {
 		for j := 0; j < len(triangle[0]); j++ {
-			if triangle[i][j] == 1 && floorPlan[x+i][y+j] == 0 {
+			if triangle[i][j] == 1 && grid[x+i][y+j] == 0 {
 				return false
 			}
 		}
