@@ -72,6 +72,17 @@ func (r *Robots) move() {
 	r.p.py = (r.p.py + r.v.vy + H) % H
 }
 
+func isMatch(grid [][]int, x, y int) bool {
+	for i := 0; i < len(triangle); i++ {
+		for j := 0; j < len(triangle[0]); j++ {
+			if triangle[i][j] == 1 && grid[x+i][y+j] == 0 {
+				return false
+			}
+		}
+	}
+	return true
+}
+
 func partOne(path string) int {
 	robots := readData(path)
 
@@ -134,17 +145,6 @@ func partTwo(path string) int {
 			}
 		}
 	}
-}
-
-func isMatch(grid [][]int, x, y int) bool {
-	for i := 0; i < len(triangle); i++ {
-		for j := 0; j < len(triangle[0]); j++ {
-			if triangle[i][j] == 1 && grid[x+i][y+j] == 0 {
-				return false
-			}
-		}
-	}
-	return true
 }
 
 func DayFourteen() {

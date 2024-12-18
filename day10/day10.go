@@ -71,7 +71,6 @@ func calculateTrailheadScores(grid [][]int) int {
 			}
 		}
 	}
-
 	return totalScore
 }
 

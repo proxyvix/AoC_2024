@@ -83,8 +83,6 @@ func getSideCount(sides [][3]int) int {
 		return sides[i][0] < sides[j][0]
 	})
 
-	//fmt.Println(sides)
-
 	sideCount := 0
 
 	for _, s := range sides {
@@ -152,7 +150,6 @@ func partTwo(path string) int {
 				sides := make([][3]int, 0)
 				area, _ := dfs(farm, visited, i, j, &sides)
 				sideCount := getSideCount(sides)
-				//fmt.Printf("Char: %s = Area: %d, Sides: %d\n", string(farm[i][j]), area, sideCount)
 				sum += area * sideCount
 			}
 		}
