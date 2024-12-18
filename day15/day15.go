@@ -36,8 +36,15 @@ func (r *Robot) setDir(dir rune) {
 	}
 }
 
-func (r *Robot) move(grid []string) {
+func (r *Robot) move(grid []string, obs []*Obstacle) {
 	newX, newY := r.x+r.vx, r.y+r.vy
+
+	for _, o := range obs {
+		if newX == o.x && newY == o.y {
+			return
+		}
+	}
+
 	if grid[newY][newX] != '#' {
 		r.x, r.y = newX, newY
 	}
@@ -46,15 +53,20 @@ func (r *Robot) move(grid []string) {
 func (o *Obstacle) push(r Robot, obs []*Obstacle, w, h int, grid []string) {
 	newX, newY := o.x+r.vx, o.y+r.vy
 
-	if newX >= 1 && newX < w-1 && newY >= 1 && newY < h-1 && grid[newY][newX] != '#' {
-		for _, other := range obs {
+	if newX < 1 || newX >= w-1 || newY < 1 || newY >= h-1 || grid[newY][newX] == '#' {
+		return
+	}
+
+	for _, other := range obs {
+		if other.x == newX && other.y == newY {
+			other.push(r, obs, w, h, grid)
 			if other.x == newX && other.y == newY {
-				other.push(r, obs, w, h, grid)
 				return
 			}
 		}
-		o.x, o.y = newX, newY
 	}
+
+	o.x, o.y = newX, newY
 }
 
 func readData(path string) ([]string, []string) {
@@ -90,6 +102,16 @@ func calcGPS(obs []*Obstacle) int {
 }
 
 func partOne(path string) int {
+	logFile, err := os.Create("day15/output.txt")
+	if err != nil {
+		fmt.Printf("Error creating the log file:\n%v", err)
+		return -1
+	}
+	defer logFile.Close()
+
+	writer := bufio.NewWriter(logFile)
+	defer writer.Flush()
+
 	grid, moves := readData(path)
 
 	w, h := len(grid[0]), len(grid)
@@ -113,18 +135,21 @@ func partOne(path string) int {
 			r.setDir(rune(moves[i][j]))
 
 			nextX, nextY := r.x+r.vx, r.y+r.vy
-			pushed := false
 
 			for _, o := range obs {
 				if o.x == nextX && o.y == nextY {
 					o.push(r, obs, w, h, grid)
-					pushed = true
-					break
 				}
 			}
 
-			if !pushed && grid[nextY][nextX] != '#' {
-				r.move(grid)
+			if grid[nextY][nextX] != '#' {
+				r.move(grid, obs)
+			}
+
+			writer.WriteString(fmt.Sprintf("Robot: %d, %d\n", r.x, r.y))
+
+			for _, o := range obs {
+				writer.WriteString(fmt.Sprintf("Obstacle: %d, %d\n", o.x, o.y))
 			}
 		}
 	}
@@ -133,7 +158,7 @@ func partOne(path string) int {
 
 func DayFifteen() {
 	start := time.Now()
-	partOne := partOne("day15/day15_test.txt")
+	partOne := partOne("day15/day15.txt")
 	duration := time.Since(start)
 	fmt.Printf("Solution for day 15 part one: %d\nexecution time: %v\n", partOne, duration)
 
