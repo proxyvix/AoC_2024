@@ -39,16 +39,21 @@ func DSA(maze []string, d Deer, w, h int) {
 	}
 	distances[d.y][d.x] = 0
 
+	parent := make(map[[2]int][2]int)
+
 	q := list.New()
 	q.PushBack([3]int{d.x, d.y, 0})
 
 	directions := [][2]int{
+		{0, 1},
 		{1, 0},
 		{0, -1},
 		{-1, 0},
-		{0, 1},
 	}
 
+	visited := make(map[[2]int]bool)
+
+	path := [][2]int{}
 	for q.Len() > 0 {
 		e := q.Front()
 		curr := e.Value.([3]int)
@@ -56,12 +61,20 @@ func DSA(maze []string, d Deer, w, h int) {
 
 		xx, yy, dist := curr[0], curr[1], curr[2]
 
+		if maze[yy][xx] == 'E' {
+			fmt.Println("Found:", xx, yy, dist)
+			fmt.Println(path)
+			return
+		}
+		path = append(path, [2]int{xx, yy})
+
+		if visited[[2]int{xx, yy}] {
+			continue
+		}
+		visited[[2]int{xx, yy}] = true
+
 		for _, dir := range directions {
 			nextX, nextY := xx+dir[0], yy+dir[1]
-
-			if maze[nextY][nextX] == 'E' {
-				fmt.Println("Found:", xx, yy, dist)
-			}
 
 			if maze[nextY][nextX] == '#' {
 				continue
@@ -70,9 +83,9 @@ func DSA(maze []string, d Deer, w, h int) {
 			newDist := dist + 1
 			if newDist < distances[nextY][nextX] {
 				distances[nextY][nextX] = newDist
+				parent[[2]int{nextX, nextY}] = [2]int{xx, yy}
 				q.PushBack([3]int{nextX, nextY, newDist})
 			}
-			fmt.Println(xx, yy, dist)
 		}
 	}
 }
@@ -88,6 +101,9 @@ func partOne(path string) {
 		for x := 0; x < w; x++ {
 			if maze[y][x] == 'S' {
 				d = Deer{x: x, y: y}
+			}
+			if maze[y][x] == 'E' {
+				fmt.Println(x, y)
 			}
 		}
 	}
